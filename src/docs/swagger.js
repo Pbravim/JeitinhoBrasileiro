@@ -1,5 +1,6 @@
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
+require('dotenv').config()
 
 const swaggerOptions = {
     swaggerDefinition: {
@@ -11,11 +12,11 @@ const swaggerOptions = {
       },
       servers: [
         {
-          url: process.env.ULR_API,
+          url: process.env.URL_API,
         },
       ],
     },
-    apis: ['./src/routes/*.js', './src/models/*.js'],
+    apis: ['./src/docs/*.js']
   };
   
   const swaggerDocs = swaggerJsDoc(swaggerOptions);
