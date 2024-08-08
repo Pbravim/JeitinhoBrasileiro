@@ -34,18 +34,17 @@ class App {
   }
 
   routes() {
-    this.app.use('/teste', testeRouter)
+
   }
 
   errorHandling() {
     this.app.use((error, req, res, next) => {
       if (error instanceof HttpError) {
-        console.log('ALO')
         res.status(error.status).json({ error: error.message });
       } else {
         res.status(500).json({ error: 'Internal Server Error' });
       }
-    });
+    })
   }
 
   start(port) {
