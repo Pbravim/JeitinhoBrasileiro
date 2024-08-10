@@ -1,6 +1,7 @@
 const jwt = require('../../config/jwt');
-import Grant from '../apps/Autenticacao/models/grant';
-import ProfileGrant from '../apps/Autenticacao/models/profileGrant';
+const db = require('../sequelize/models/index')
+const Grant = db.grant
+const ProfileGrant = db.profile_grant
 
 
 
