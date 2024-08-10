@@ -1,12 +1,16 @@
 // routes/projetoUsuarioRoutes.js
 const express = require('express');
-const router = express.Router();
-const projetoUsuarioController = require('../controllers/projetoUsuarioController');
+const { Router } = express;
 
-router.post('/', projetoUsuarioController.assignUser);
-router.get('/', projetoUsuarioController.getAll);
-router.get('/:id', projetoUsuarioController.getByProjetoId);
-router.put('/:id', projetoUsuarioController.update);
-router.delete('/:id', projetoUsuarioController.delete);
+const projetoUsuarioController = require('../controllers/projetoUsuarioController');
+const AuthMiddleware = require('../middlewares/auth');
+
+const router = Router();
+
+router.post('/', AuthMiddleware, projetoUsuarioController.assignUser);
+router.get('/', AuthMiddleware, projetoUsuarioController.getAll);
+router.get('/:id', AuthMiddleware, projetoUsuarioController.getByProjetoId);
+router.put('/:id', AuthMiddleware, projetoUsuarioController.update);
+router.delete('/:id', AuthMiddleware, projetoUsuarioController.delete);
 
 module.exports = router;

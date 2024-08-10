@@ -1,9 +1,8 @@
 const express = require('express');
 const tarefaController = require('../controllers/tarefaController.js');
 const { Router } = express;
+const AuthMiddleware = require('../middlewares/auth');
 
-// import AuthMiddleware from '../../../middlewares/auth';
-// const validateResponserMiddleware = require("../../../middlewares/validateResponse");
 
 
 const router = Router();
