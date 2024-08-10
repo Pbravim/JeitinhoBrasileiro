@@ -1,14 +1,13 @@
 'use strict';
 const {
-  Model
+  Model,
 } = require('sequelize');
-
 const STATUS = {
   em_andamento: '0',
   finalizado: '1',
 }
 
-module.exports = (sequelize, DataTypes) => {
+module.exports =  (sequelize, DataTypes) => {
   class Tarefa extends Model {
     /**
      * Helper method for defining associations.
@@ -21,8 +20,9 @@ module.exports = (sequelize, DataTypes) => {
   }
   Tarefa.init({
     descricao: DataTypes.STRING,
+    title: DataTypes.STRING,
     data_inicio: DataTypes.DATE,
-    data_fim: DataTypes.DATE,
+    prazo: DataTypes.DATE,
     status: {
       type: DataTypes.ENUM,
       values: Object.values(STATUS)
@@ -47,9 +47,8 @@ module.exports = (sequelize, DataTypes) => {
   });
 
 Tarefa.associate = models => {
-  Tarefa.belongsTo(models.Projeto, { foreignKey: 'projeto_id', as: 'projeto_id' });
-  Tarefa.belongsTo(models.User, { foreignKey: 'user_id', as: 'user_id' });
-  Tarefa.hasMany(models.Tarefa_Usuario, { foreignKey: 'tarefa_usuario_id', as: 'tarefa_usuario_id' });
+  Tarefa.belongsTo(models.Projeto, { foreignKey: 'projeto_id', as: 'projeto' });
+  Tarefa.belongsToMany(models.User, { through: models.Tarefa_Usuario, as: 'usuarios', foreignKey: 'tarefa_id' });
 }
   
   return Tarefa;

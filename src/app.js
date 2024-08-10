@@ -6,7 +6,8 @@ const HttpError = require('./utils/customError/httpError');
 
 const whiteList = ['*'];
 
-const testeRouter = require('./routes/teste')
+// const testeRouter = require('./routes/teste')
+const tarefasRouter = require('./routes/tarefasRouter.js')
 
 const corsOptions = {
   origin: function (origin, callback) {
@@ -34,6 +35,7 @@ class App {
   }
 
   routes() {
+    this.app.use("/tarefas", tarefasRouter);
 
   }
 

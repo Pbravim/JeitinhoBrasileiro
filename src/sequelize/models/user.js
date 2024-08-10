@@ -1,12 +1,10 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model, DataTypes } = require('sequelize');
 
-STATUS = {
+const STATUS = {
   em_andamento: '0',
   finalizado: '1',
-}
+};
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
@@ -19,14 +17,19 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
+
   User.init({
-    id: DataTypes.UUIDV4,
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true, // Mark id as the primary key
+    },
     name: DataTypes.STRING,
     cpf: DataTypes.STRING,
     phone: DataTypes.STRING,
     status: {
       type: DataTypes.ENUM,
-      values: Object.values(STATUS)
+      values: Object.values(STATUS),
     },
     email: DataTypes.STRING,
   }, {
@@ -35,9 +38,9 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   User.associate = models => {
-    User.hasMany(models.Tarefa, { foreignKey: 'user_id', as: 'user_id' });
-    User.hasMany(models.Projeto_Usuario, { foreignKey: 'user_id', as: 'user_id' });
-  }
+    User.hasMany(models.Tarefa, { foreignKey: 'user_id', as: 'tarefas' });
+    User.hasMany(models.Projeto_Usuario, { foreignKey: 'user_id', as: 'projetos' });
+  };
 
   return User;
 };
