@@ -1,14 +1,7 @@
 const db = require ('../sequelize/models/index')
-const User = db.Users
-const ValidaCPF = require('../utils/validaCPF')
-const Decimal = require('decimal.js');
-const bcrypt = require('bcrypt')
-const profileService = require('./profileService')
-const jwt = require('../config/jwt');
-const sendMailPromise = require('../utils/mailer/mailer')
+const User = db.User
+const jwt = require('../../config/jwt');
 const { v4: uuidv4 } = require('uuid');
-const helper = require('../utils/mailer/defaultEmail')
-const crypto = require('crypto')
 const { profile, error } = require('console');
 const HttpError = require("../utils/customError/httpError");
 require('dotenv').config();

@@ -1,8 +1,14 @@
 // controllers/projetoUsuarioController.js
 const projetoUsuarioService = require('../services/projetoUsuarioService');
+require('dotenv').config
 
-exports.assignUser = async (req, res) => {
+const ProjetoID = process.env.PROJETO_ID
+
+const assignUser = async (req, res) => {
     try {
+        req.body.user_id = req.userInfo.id
+        req.body.projeto_id = ProjetoID
+        
         const assignment = await projetoUsuarioService.assignUserToProject(req.body);
         res.status(201).json({ data: assignment });
     } catch (error) {
@@ -10,7 +16,7 @@ exports.assignUser = async (req, res) => {
     }
 };
 
-exports.getAll = async (req, res) => {
+const getAll = async (req, res) => {
     try {
         const assignments = await projetoUsuarioService.getAllAssignments();
         res.status(200).json({ data: assignments });
@@ -19,9 +25,11 @@ exports.getAll = async (req, res) => {
     }
 };
 
-exports.getById = async (req, res) => {
+//Pegar usuarios por projeto
+const getByProjetoId = async (req, res) => {
     try {
-        const assignment = await projetoUsuarioService.getAssignmentById(req.params.id);
+
+        const assignment = await projetoUsuarioService.getAssignmentById(ProjetoID);
         if (assignment) {
             res.status(200).json({ data: assignment });
         } else {
@@ -32,9 +40,9 @@ exports.getById = async (req, res) => {
     }
 };
 
-exports.update = async (req, res) => {
+const update = async (req, res) => {
     try {
-        const assignment = await projetoUsuarioService.updateAssignment(req.params.id, req.body);
+        const assignment = await projetoUsuarioService.updateAssignment(req.userInfo.id, ProjetoID, req.body);
         if (assignment) {
             res.status(200).json({ data: assignment });
         } else {
@@ -45,11 +53,19 @@ exports.update = async (req, res) => {
     }
 };
 
-exports.delete = async (req, res) => {
+const deleteAssignment = async (req, res) => {
     try {
-        await projetoUsuarioService.deleteAssignment(req.params.id);
+        await projetoUsuarioService.deleteAssignment(req.userInfo.id, ProjetoID);
         res.status(200).json({ message: 'Assignment deleted successfully' });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
+};
+
+module.exports = {
+    assignUser,
+    getAll,
+    getByProjetoId,
+    update,
+    delete: deleteAssignment
 };
