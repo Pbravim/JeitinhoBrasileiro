@@ -5,7 +5,7 @@ const projetoUsuarioController = require('../controllers/projetoUsuarioControlle
 
 router.post('/', projetoUsuarioController.assignUser);
 router.get('/', projetoUsuarioController.getAll);
-router.get('/:id', projetoUsuarioController.getById);
+router.get('/:id', projetoUsuarioController.getByProjetoId);
 router.put('/:id', projetoUsuarioController.update);
 router.delete('/:id', projetoUsuarioController.delete);
 
