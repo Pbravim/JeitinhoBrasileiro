@@ -20,7 +20,6 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Projeto_Usuario.init({
-    id: DataTypes.UUIDV4,
     funcao: DataTypes.STRING,
     data_inicio: DataTypes.DATE,
     data_fim: DataTypes.DATE,
@@ -35,7 +34,8 @@ module.exports = (sequelize, DataTypes) => {
         model: 'Projeto',
         key: 'id'
       },
-      allowNull: false
+      allowNull: false,
+      primaryKey: true
     },
     user_id: {
       type: DataTypes.UUIDV4,
@@ -43,7 +43,9 @@ module.exports = (sequelize, DataTypes) => {
         model: 'User',
         key: 'id'
       },
-      allowNull: false
+      allowNull: false,
+      primaryKey: true
+
     },
     profile_id: {
       type: DataTypes.UUIDV4,

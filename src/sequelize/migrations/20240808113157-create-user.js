@@ -23,10 +23,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      profile_id: {
-        type: Sequelize.DataTypes.UUID,
-        references: { model: 'profiles', key: 'id' }
-      },
       telefone: {
         type: Sequelize.STRING,
         allowNull: true

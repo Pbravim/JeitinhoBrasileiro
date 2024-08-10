@@ -4,10 +4,10 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('comentarios', {
       id: {
+        type: Sequelize.DataTypes.UUID,
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        defaultValue: Sequelize.DataTypes.UUIDV1
       },
       texto: {
         type: Sequelize.STRING

@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     id: DataTypes.UUIDV4,
     name: DataTypes.STRING,
     cpf: DataTypes.STRING,
-    telefone: DataTypes.STRING,
+    phone: DataTypes.STRING,
     status: {
       type: DataTypes.ENUM,
       values: Object.values(STATUS)
