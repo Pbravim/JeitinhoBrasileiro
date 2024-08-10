@@ -1,4 +1,5 @@
 'use strict';
+const { DataTypes } = require('sequelize');
 
 const STATUS = {
   em_andamento: '0',
@@ -8,7 +9,7 @@ const STATUS = {
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable('users', {
       id: {
         type: Sequelize.UUIDV4,
         allowNull: false,
@@ -50,9 +51,9 @@ module.exports = {
         allowNull: false,
         defaultValue: new Date()
       }
-    }).then(() => queryInterface.addIndex('users', ['profile_id']));
+    });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Users');
+    await queryInterface.dropTable('users');
   }
 };
