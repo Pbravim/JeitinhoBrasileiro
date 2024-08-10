@@ -2,7 +2,7 @@ import usersService from '../services/usersService'
 
 exports.create = async(req, res) => {
     try{
-        const user = await usersService.create(req.body)
+        const user = await usersService.createUser(req.body)
         res.status(200).json({data: user})
     } catch (error){
         res.status(500).json({error: error.message})
@@ -49,8 +49,8 @@ exports.getUserWithoutPassword = async(req, res) => {
 
 exports.authenticate = async (req, res) => {
     try {
-        const {token, balance} = await usersService.authenticate(req.body);
-        res.status(200).json({ token, balance });
+        const {token} = await usersService.authenticate(req.body);
+        res.status(200).json({ token });
     } catch (error) {
         res.status(401).json({ error: error.message });
     }

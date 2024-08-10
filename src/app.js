@@ -8,6 +8,8 @@ const whiteList = ['*'];
 
 // const testeRouter = require('./routes/teste')
 const tarefasRouter = require('./routes/tarefasRouter.js')
+const userRouter = require('./routes/userRouter.js')
+const projetoUsuarioRouter = require('./routes/projetoUsuarioRouter.js')
 
 const corsOptions = {
   origin: function (origin, callback) {
@@ -36,6 +38,9 @@ class App {
 
   routes() {
     this.app.use("/tarefas", tarefasRouter);
+    this.app.use("/users", userRouter);
+    this.app.use("/projeto-usuario", projetoUsuarioRouter);
+
 
   }
 

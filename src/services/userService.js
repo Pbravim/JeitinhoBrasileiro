@@ -14,35 +14,8 @@ const HttpError = require("../utils/customError/httpError");
 require('dotenv').config();
 
 
-exports.create = async (body) => {
+const createUser = async (body) => {
     try {
-        let mess = [], isAdmin = false
-
-        if (!body.email) {
-            mess.push('coloque um email')
-        }
-
-        if (!body.password){
-            mess.push('coloque uma senha valida')
-        }
-
-        // const is_validocpf =  new ValidaCPF(body.cpf).valida()
-
-        // if (!is_validocpf){
-        //     mess.push('coloque um cpf valido')
-        // }
-        if ( !body.phone){
-            mess.push('coloque um número valido')
-        }
-        if( !body.date_birth){
-            mess.push('coloque uma data de nascimento valida')
-        }
-
-        if (await this.getEmail(body.email)){
-            mess.push('email ja cadastrado')
-        }
-
-
 
         if(mess.length>0){
             throw new Error(error.mess)
@@ -67,11 +40,12 @@ exports.create = async (body) => {
 
     } catch (err) {
         console.error(err.message)
+        throw new HttpError(400, "Não foi possível criar a tarefa");
 
     }
 }
 
-exports.authenticate = async (body) => {
+const authenticate = async (body) => {
     const user = await this.getEmail(body.email)
 
     if (!user) {
@@ -85,11 +59,11 @@ exports.authenticate = async (body) => {
     }
 
     const token = jwt.sign({ id: user.id, email: user.email});
-    return {token: token, balance: user.balance};
+    return token;
 }
 
 
-exports.deleteUser = async (id) => {
+const deleteUser = async (id) => {
     try {
         const user = await User.findOne({
             where: {
@@ -104,14 +78,14 @@ exports.deleteUser = async (id) => {
 
         await user.destroy()
 
-        return('usuario deletado')
+        return true;
     } catch (e){
         throw(e)
 
     }
 }
 
-exports.getAllUser = async () => {
+const getAllUser = async () => {
     try{
         const users = await User.findAll({
             attributes: { exclude: ['hashed_password'] }
@@ -122,7 +96,7 @@ exports.getAllUser = async () => {
     }
 }
 
-exports.getUser = async (id) => {
+const getUser = async (id) => {
     try {
         const user = await User.findOne({
             where:{
@@ -141,7 +115,7 @@ exports.getUser = async (id) => {
     }
 }
 
-exports.getUserWithoutPassword = async (id) => {
+const getUserWithoutPassword = async (id) => {
     try {
         const user = await User.findOne({
             where:{
@@ -162,7 +136,7 @@ exports.getUserWithoutPassword = async (id) => {
     }
 }
 
-exports.updateUser = async (userId, body) => {
+const updateUser = async (userId, body) => {
     try {
         const user = await this.getUser(userId)
         if (!user){
@@ -170,7 +144,7 @@ exports.updateUser = async (userId, body) => {
 
         }
         const {hashed_password, id, createdAt, updatedAt,
-            profiles_id, balance,  ...dataUpdate} = body
+            ...dataUpdate} = body
         dataUpdate.updatedAt = new Date()
 
         await user.update(dataUpdate)
@@ -181,7 +155,7 @@ exports.updateUser = async (userId, body) => {
     }
 }
 
-exports.getEmail = async (email) => {
+const getEmail = async (email) => {
     try {
         const user = await User.findOne({
             where:{
@@ -197,6 +171,17 @@ exports.getEmail = async (email) => {
     }catch (e){
         throw(e)
     }
+}
+
+module.exports = { 
+    createUser,
+    authenticate,
+    deleteUser,
+    getAllUser,
+    getUser,
+    getUserWithoutPassword,
+    updateUser,
+    getEmail,
 }
 
 //
