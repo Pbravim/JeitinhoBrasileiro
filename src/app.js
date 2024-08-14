@@ -52,6 +52,7 @@ class App {
     this.app.listen(port, () => {
       console.log('Rodando na porta: ', port);
       console.log('Documentação: ', process.env.URL_API + '/api-docs');
+
     });
   }
 }
