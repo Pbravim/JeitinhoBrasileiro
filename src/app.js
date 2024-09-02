@@ -6,7 +6,8 @@ const HttpError = require('./utils/customError/httpError');
 
 const whiteList = ['*'];
 
-const testeRouter = require('./routes/teste')
+const userRouter = require('./routes/userRouter')
+
 
 const corsOptions = {
   origin: function (origin, callback) {
@@ -34,13 +35,12 @@ class App {
   }
 
   routes() {
-    this.app.use('/teste', testeRouter)
+    this.app.use('/user', userRouter)
   }
 
   errorHandling() {
     this.app.use((error, req, res, next) => {
       if (error instanceof HttpError) {
-        console.log('ALO')
         res.status(error.status).json({ error: error.message });
       } else {
         res.status(500).json({ error: 'Internal Server Error' });
@@ -51,7 +51,7 @@ class App {
   start(port) {
     this.app.listen(port, () => {
       console.log('Rodando na porta: ', port);
-      console.log('Documentação: ', process.env.URL_API + '/api-docs');
+      console.log('Documentação: ', ' http://localhost:3011/api-docs' + '/api-docs');
 
     });
   }

@@ -1,4 +1,6 @@
-const JWT_SECRET = process.env.TOKEN_JWT;
+require('dotenv').config()
+
+const JWT_SECRET = process.env.TOKEN_JWT || 'hestia';
 const jwtLib = require('jsonwebtoken');
 
 const sign = (values = {}) => {
