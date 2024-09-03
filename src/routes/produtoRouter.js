@@ -11,7 +11,7 @@ const router = express.Router();
 router.post('/', authMiddleware, ProdutoController.create);     
 router.get('/', ProdutoController.getAll);     
 
-router.post('/:id/imagem', authMiddleware, upload.single('imagem'), ProdutoController.uploadImagem);
+router.post('/:nome/imagem', authMiddleware, upload.single('imagem'), ProdutoController.uploadImagem);
 
 // ID COMO PARAMETRO  
 router.get('/:id', ProdutoController.getById);  

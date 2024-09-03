@@ -6,10 +6,10 @@ class ProdutoService {
     static async create(data) {
         const novoProduto = await Produtos.create(data)
 
-        const imagePath = path.join(__dirname, '../../public/images/produtos', `${novoProduto.id}.jpg`);
+        const imagePath = path.join(__dirname, '../../public/images/produtos', `${novoProduto.nome}.jpg`);
 
         if (fs.existsSync(imagePath)) {
-            novoProduto.dataValues.imagemUrl = `/public/images/produtos/${novoProduto.id}.jpg`;
+            novoProduto.dataValues.imagemUrl = `/public/images/produtos/${novoProduto.nome}.jpg`;
         } else {
 
             novoProduto.dataValues.imagemUrl = `/public/images/produtos/default.jpg`;
@@ -21,9 +21,9 @@ class ProdutoService {
         const produtos = await Produtos.findAll();
 
         produtos.forEach(produto => {
-            const imagePath = path.join(__dirname, '../../public/images/produtos', `${produto.id}.jpg`);
+            const imagePath = path.join(__dirname, '../../public/images/produtos', `${produto.nome}.jpg`);
             if (fs.existsSync(imagePath)) {
-                produto.dataValues.imagemUrl = `/public/images/produtos/${produto.id}.jpg`;
+                produto.dataValues.imagemUrl = `/public/images/produtos/${produto.nome}.jpg`;
             } else {
                 produto.dataValues.imagemUrl = `/public/images/produtos/default.jpg`;
             }
@@ -51,10 +51,10 @@ class ProdutoService {
             throw new Error('Produto não encontrado');
         }
 
-        const imagePath = path.join(__dirname, '../../public/images/produtos', `${produto.id}.jpg`);
+        const imagePath = path.join(__dirname, '../../public/images/produtos', `${produto.nome}.jpg`);
 
         if (fs.existsSync(imagePath)) {
-            novoProduto.dataValues.imagemUrl = `/public/images/produtos/${novoProduto.id}.jpg`;
+            novoProduto.dataValues.imagemUrl = `/public/images/produtos/${novoProduto.nome}.jpg`;
         } else {
             // Se não existir, usa a imagem padrão
             novoProduto.dataValues.imagemUrl = `/public/images/produtos/default.jpg`;
@@ -67,7 +67,7 @@ class ProdutoService {
         if (!produto) {
             throw new Error('Produto não encontrado');
         }
-        produto.dataValues.imagemUrl = `/public/images/produtos/${produto.id}.jpg`
+        produto.dataValues.imagemUrl = `/public/images/produtos/${produto.nome}.jpg`
 
         return await produto.update(data);
     }

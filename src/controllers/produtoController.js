@@ -12,7 +12,7 @@ class ProdutoController {
 
     static async uploadImagem(req, res) {
         try {
-            const produto = await ProdutoService.updateImagem(req.params.id, req.file.filename);
+            const produto = await ProdutoService.updateImagem(req.params.nome, req.file.filename);
             return res.json(produto);
         } catch (error) {
             return res.status(400).json({ error: error.message });
