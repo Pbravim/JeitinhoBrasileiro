@@ -24,6 +24,10 @@ module.exports = {
       carrinho_id: {
         type: Sequelize.STRING,
         allowNull: false,
+        references: {
+          model: 'Carrinho',
+          key: 'id',
+        },
       },
       details: {
         type: Sequelize.STRING,

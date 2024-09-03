@@ -24,18 +24,26 @@ function initModels(sequelize) {
   var Transacao = _Transacao(sequelize, DataTypes);
   var User = _User(sequelize, DataTypes);
 
-  Produtos.belongsTo(Categoria, { as: "categorium", foreignKey: "categoria_id"});
-  Categoria.hasMany(Produtos, { as: "Produtos", foreignKey: "categoria_id"});
-  ProfileGrants.belongsTo(Grants, { as: "grant", foreignKey: "grant_id"});
-  Grants.hasMany(ProfileGrants, { as: "ProfileGrants", foreignKey: "grant_id"});
-  Carrinho_Itens.belongsTo(Produtos, { as: "produto", foreignKey: "produto_id"});
-  Produtos.hasMany(Carrinho_Itens, { as: "Carrinho_Itens", foreignKey: "produto_id"});
-  ProfileGrants.belongsTo(Profiles, { as: "profile", foreignKey: "profile_id"});
-  Profiles.hasMany(ProfileGrants, { as: "ProfileGrants", foreignKey: "profile_id"});
-  Entrega.belongsTo(Transacao, { as: "transacao", foreignKey: "transacao_id"});
-  Transacao.hasMany(Entrega, { as: "Entregas", foreignKey: "transacao_id"});
-  Carrinho.belongsTo(User, { as: "user", foreignKey: "user_id"});
-  User.hasMany(Carrinho, { as: "Carrinhos", foreignKey: "user_id"});
+  Produtos.belongsTo(Categoria, { as: "categorium", foreignKey: "categoria_id" });
+  Categoria.hasMany(Produtos, { as: "Produtos", foreignKey: "categoria_id" });
+  
+  ProfileGrants.belongsTo(Grants, { as: "grant", foreignKey: "grant_id" });
+  Grants.hasMany(ProfileGrants, { as: "ProfileGrants", foreignKey: "grant_id" });
+  
+  Carrinho_Itens.belongsTo(Produtos, { as: "produto", foreignKey: "produto_id" });
+  Produtos.hasMany(Carrinho_Itens, { as: "Carrinho_Itens", foreignKey: "produto_id" });
+  
+  ProfileGrants.belongsTo(Profiles, { as: "profile", foreignKey: "profile_id" });
+  Profiles.hasMany(ProfileGrants, { as: "ProfileGrants", foreignKey: "profile_id" });
+  
+  Entrega.belongsTo(Transacao, { as: "transacao", foreignKey: "transacao_id" });
+  Transacao.hasMany(Entrega, { as: "Entregas", foreignKey: "transacao_id" });
+  
+  Carrinho.belongsTo(User, { as: "user", foreignKey: "user_id" });
+  User.hasMany(Carrinho, { as: "Carrinhos", foreignKey: "user_id" });
+  
+  Transacao.belongsTo(Carrinho, { as: "carrinho", foreignKey: "carrinho_id" });
+  Carrinho.hasMany(Transacao, { as: "transacoes", foreignKey: "carrinho_id" });
 
   return {
     Carrinho,

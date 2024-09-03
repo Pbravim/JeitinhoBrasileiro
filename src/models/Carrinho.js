@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
+
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('Carrinho', {
+  const Carrinho = sequelize.define('Carrinho', {
     id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
@@ -14,6 +15,11 @@ module.exports = function(sequelize, DataTypes) {
         model: 'User',
         key: 'id'
       }
+    },
+    status: {
+      type: DataTypes.STRING(20),
+      allowNull: false,
+      defaultValue: 'aberto'
     }
   }, {
     sequelize,
@@ -30,4 +36,11 @@ module.exports = function(sequelize, DataTypes) {
       },
     ]
   });
+
+  // Definição das Associações
+  Carrinho.associate = function(models) {
+    Carrinho.hasMany(models.Carrinho_Itens, { as: "itens", foreignKey: "carrinho_id" });
+  };
+
+  return Carrinho;
 };

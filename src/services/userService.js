@@ -12,14 +12,12 @@ class UserService {
             throw new Error('User not found');
         }
 
-        const isPasswordValid = await bcrypt.compare(password, user.password);
+        const isPasswordValid = await bcrypt.compare(password, user.hashed_senha);
         if (!isPasswordValid) {
             throw new Error('Invalid password');
         }
 
-        const token = jwt.sign({ id: user.id, email: user.email }, process.env.TOKEN_JWT || 'hestia', {
-            expiresIn: '1h' 
-        });
+        const token = jwt.sign({ id: user.id, email: user.email });
 
 
         return { user, token };
@@ -32,9 +30,7 @@ class UserService {
             hashed_senha: hashedPassword
         });
 
-        const token = jwt.sign({ id: user.id, email: user.email }, process.env.TOKEN_JWT || 'hestia', {
-            expiresIn: '1h'
-        });
+        const token = jwt.sign({ id: user.id, email: user.email });
 
         return { user, token };
     }

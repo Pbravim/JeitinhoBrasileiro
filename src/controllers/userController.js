@@ -23,7 +23,7 @@ class UserController {
 
     static async profile(req, res) {
         try {
-            const user = await UserService.getUserById(req.userId);
+            const user = await UserService.getUserById(req.userInfo.id);
             if (!user) {
                 return res.status(404).json({ error: "User not found" });
             }

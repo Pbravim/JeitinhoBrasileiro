@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
+
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('Transacao', {
+  const Transacao = sequelize.define('Transacao', {
     id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
@@ -20,7 +21,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     carrinho_id: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.INTEGER,
       allowNull: false
     },
     details: {
@@ -42,4 +43,12 @@ module.exports = function(sequelize, DataTypes) {
       },
     ]
   });
+
+  // Definição das Associações
+  Transacao.associate = function(models) {
+    Transacao.belongsTo(models.Carrinho, { as: "carrinho", foreignKey: "carrinho_id" });
+    Transacao.hasMany(models.Entrega, { as: "entregas", foreignKey: "transacao_id" });
+  };
+
+  return Transacao;
 };

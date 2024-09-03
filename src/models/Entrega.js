@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
+
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('Entrega', {
+  const Entrega = sequelize.define('Entrega', {
     id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
@@ -18,6 +19,10 @@ module.exports = function(sequelize, DataTypes) {
     status: {
       type: DataTypes.STRING(255),
       allowNull: false
+    },
+    endereco: {
+      type: DataTypes.STRING(255),
+      allowNull: true
     }
   }, {
     sequelize,
@@ -34,4 +39,11 @@ module.exports = function(sequelize, DataTypes) {
       },
     ]
   });
+
+  // Definição das Associações
+  Entrega.associate = function(models) {
+    Entrega.belongsTo(models.Transacao, { as: "transacao", foreignKey: "transacao_id" });
+  };
+
+  return Entrega;
 };
