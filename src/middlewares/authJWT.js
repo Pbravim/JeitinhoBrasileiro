@@ -22,6 +22,7 @@ const authMiddleware = async (req, res, next) => {
     let userInfo;
     try {
         userInfo = jwt.verify(token);
+        req.userInfo = userInfo
     } catch (error) {
         return res.status(401).send({ error: "Token invalid" });
     }
