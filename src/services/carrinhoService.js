@@ -1,5 +1,6 @@
 const { Carrinho, Produtos, Carrinho_Itens } = require('../models');
 const EntregaService = require('./entregaService');
+const MercadoPagoService = require('./mercadoPagoService');
 const TransacaoService = require('./transacaoService');
 
 class CarrinhoService {
@@ -53,7 +54,7 @@ class CarrinhoService {
         return carrinho;
     }
 
-    static async checkout(userId, paymentMethod, endereco) {
+    static async checkout(userId, formData, paymentType, endereco) {
         const carrinho = await Carrinho.findOne({ where: { user_id: userId, status: 'aberto' } });
         if (!carrinho) {
             throw new Error('Carrinho não encontrado');
@@ -62,14 +63,18 @@ class CarrinhoService {
         const items = await Carrinho_Itens.findAll({ where: { carrinho_id: carrinho.id } });
         const totalAmount = items.reduce((total, item) => total + item.preco_total_itens, 0);
 
-        const transacao = await TransacaoService.create(carrinho.id, userId, totalAmount, paymentMethod)
+        if (formData.transaction_amount < totalAmount){
+            throw new Error("SALDO INVALIDO")
+        }
+
+        const {resposta, transacao} = await MercadoPagoService.createPayment(userId, formData, paymentType, carrinho.id)
 
         const entrega = await EntregaService.create(transacao.id, userId, endereco);
 
         carrinho.status = 'fechado';
         await carrinho.save();
 
-        return { transacao, entrega };
+        return { resposta, entrega };
     }
 
     static async clearCarrinho(userId) {

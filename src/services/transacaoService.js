@@ -9,6 +9,10 @@ class TransacaoService {
             carrinho_id: carrinhoId,
             user_id: userId
         });
+
+
+
+        
         return transacao;
     }
 
@@ -37,6 +41,24 @@ class TransacaoService {
             }
         });
     }
+
+    
+    static async changeStatus(payment_id, status) {
+    try{
+        const transacao = await Transaction.findOne({
+            where: {payment_id: payment_id}
+        });
+        
+        if (!transacao) throw new HttpError(404, 'Transação não encontrada')
+        
+        await transacao.update({ status: status });
+        
+        return transacao;
+    }catch(error){
+        console.error("changeStatus_transactionService")
+        throw (error)
+    }
+}
 }
 
 module.exports = TransacaoService;

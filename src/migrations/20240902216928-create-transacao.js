@@ -22,7 +22,7 @@ module.exports = {
         allowNull: false,
       },
       carrinho_id: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'Carrinho',
