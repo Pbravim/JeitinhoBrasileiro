@@ -22,10 +22,10 @@ class CarrinhoController {
     }
 
     static async checkout(req, res) {
-        const { paymentMethod, endereco } = req.body;
+        const { formData, paymentType, endereco } = req.body;
 
         try {
-            const result = await CarrinhoService.checkout(req.userInfo.id, paymentMethod, endereco);
+            const result = await CarrinhoService.checkout(req.userInfo.id, formData, paymentType, endereco);
             return res.status(200).json(result);
         } catch (error) {
             return res.status(400).json({ error: error.message });
