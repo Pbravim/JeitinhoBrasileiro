@@ -1,0 +1,44 @@
+# Jeitinho Brasileiro
+
+## Instalação
+Para instalar e rodar o projeto localmente, siga os seguintes passos:
+
+1. Clone o repositório:
+    ```bash
+    git clone https://github.com/Pbravim/JeitinhoBrasileiro.git
+    ```
+
+2. Acesse o diretório do projeto:
+    ```bash
+    cd JeitinhoBrasileiro
+    ```
+
+3. Instale as dependências:
+    ```bash
+    npm install
+    ```
+
+## Configuração
+
+Antes de rodar o projeto, é necessário configurar o banco de dados:
+
+1. Edite o arquivo `config/config.json` e insira os dados de conexão do seu banco de dados:
+    ```json
+    {
+      "development": {
+        "username": "seu_usuario",
+        "password": "sua_senha",
+        "database": "nome_do_seu_banco",
+        "host": "localhost",
+        "dialect": "mysql"
+      }
+    }
+    ```
+
+Certifique-se de configurar os campos `username`, `password`, `database`, e `host` de acordo com o seu ambiente de banco de dados.
+
+## Uso
+Após configurar o banco de dados, você pode rodar o projeto com o seguinte comando:
+
+```bash
+npm start

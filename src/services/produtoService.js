@@ -47,6 +47,7 @@ class ProdutoService {
 
     static async findById(id) {
         const produto = await Produtos.findByPk(id);
+        
         if (!produto) {
             throw new Error('Produto não encontrado');
         }
@@ -54,10 +55,10 @@ class ProdutoService {
         const imagePath = path.join(__dirname, '../../public/images/produtos', `${produto.nome}.jpg`);
 
         if (fs.existsSync(imagePath)) {
-            novoProduto.dataValues.imagemUrl = `/public/images/produtos/${novoProduto.nome}.jpg`;
+            novoProduto.dataValues.imagemUrl = `/public/images/produtos/${produto.nome}.jpg`;
         } else {
             // Se não existir, usa a imagem padrão
-            novoProduto.dataValues.imagemUrl = `/public/images/produtos/default.jpg`;
+            produto.dataValues.imagemUrl = `/public/images/produtos/default.jpg`;
         }
         return produto;
     }
