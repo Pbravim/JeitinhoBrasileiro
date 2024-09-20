@@ -42,4 +42,3 @@ Após configurar o banco de dados, você pode rodar o projeto com o seguinte com
 
 ```bash
 npm start
-```
