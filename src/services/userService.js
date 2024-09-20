@@ -19,7 +19,7 @@ class UserService {
 
         const token = jwt.sign({ id: user.id, email: user.email });
 
-
+        delete user.hashedPassword 
         return { user, token };
     }
 
